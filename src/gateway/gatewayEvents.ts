@@ -62,6 +62,13 @@ namespace GatewayEvents {
 
   export interface MessageCreate {
     content: string,
+    channel_id: string,
+    author: any
+  }
+
+  export interface MessageUpdate {
+    content: string,
+    channel_id: string,
     author: any
   }
 }

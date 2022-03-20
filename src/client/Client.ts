@@ -1,3 +1,4 @@
+import axios, { AxiosInstance } from 'axios'
 import { EventEmitter } from 'stream'
 import WebSocket from 'ws'
 import ClientEvents from '../gateway/clientEvents'
@@ -13,8 +14,10 @@ export interface ClientOptions {
 }
 
 export default class Client extends EventEmitter {
-  public options: ClientOptions['options'] = {}
+  public readonly API_VERSION = '9'
+  public api: AxiosInstance
   public user: any
+  public options: ClientOptions['options'] = {}
   intents: number
   _token: string
 
@@ -26,11 +29,18 @@ export default class Client extends EventEmitter {
     super()
     this._token = options.token
 
-    this.intents = typeof options.intents === 'number' ? options.intents : options.intents.reduce((acc, curr) => acc += curr)
+    if (typeof options.intents !== 'number') 
+      options.intents = options.intents.reduce((acc, curr) => acc | curr)
 
-    this._tokenType = options._tokenType
+    this.intents = options.intents
 
     this.ws = new WebSocketManager(this)
+    this.api = axios.create({
+      baseURL: `https://discord.com/api/v${this.API_VERSION}`,
+      headers: {
+        Authorization: `${this._tokenType} ${this._token}`
+      }
+    })
   }
 
   emit<K extends keyof ClientEvents> (event: K, ...args: ClientEvents[K]): boolean

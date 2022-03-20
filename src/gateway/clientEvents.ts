@@ -7,6 +7,7 @@ interface ClientEvents {
   raw: [packet: GatewayEvents.Packet]
   ready: [raw: GatewayEvents.Ready]
   messageCreate: [message: Message]
+  messageUpdate: [message: Message]
 }
 
 export default ClientEvents

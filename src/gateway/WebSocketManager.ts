@@ -1,7 +1,7 @@
 import EventEmitter from 'events'
 import WebSocket from 'ws'
 import Client from '../client'
-import { Opcodes } from '../util/Constants'
+import { Opcodes, SocketCloseCodes } from '../Constants'
 import GatewayEvents from './gatewayEvents'
 
 import * as DispatchEvents from './dispatch'
@@ -18,13 +18,14 @@ export default class WebSocketManager extends EventEmitter {
     super()
 
     this._client = client
-    this.gateway = 'wss://gateway.discord.gg/?v=9&encoding=json'
+    this.gateway = `wss://gateway.discord.gg/?encoding=json&v=${this._client.API_VERSION}`
   }
 
   connect () {
     this.connection = new WebSocket(this.gateway, this._client.options.ws)
 
     this.connection.on('message', this.onWSMessage)
+    this.connection.on('close', this.onWSClose)
   }
 
   sendWS (op: GatewayEvents.Opcodes, data: any) {
@@ -75,6 +76,16 @@ export default class WebSocketManager extends EventEmitter {
         this.identify()
         this.heartbeat()
         break
+    }
+  }
+
+  onWSClose(code: number, reason: Buffer) {
+    if (code === SocketCloseCodes.INVALID_INTENTS) {
+      throw new TypeError('Invalid intents')
+    }
+
+    if (code === SocketCloseCodes.DISALLOWED_INTENTS) {
+      throw new TypeError('Disallowed intents!')
     }
   }
 
