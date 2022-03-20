@@ -8,7 +8,7 @@ namespace GatewayEvents {
     t?: string
   }
 
-  export interface Ready {
+  export interface ReadyEvent {
     v: number
     user: any
     guilds: any[]
@@ -18,7 +18,7 @@ namespace GatewayEvents {
     session_id: string
   }
 
-  export interface GuildCreate {
+  export interface GuildCreateEvent {
     id: string,
     name: string,
     explicit_content_filter: number,
@@ -60,13 +60,13 @@ namespace GatewayEvents {
     premium_tier: number
   }
 
-  export interface MessageCreate {
+  export interface MessageCreateEvent {
     content: string,
     channel_id: string,
     author: any
   }
 
-  export interface MessageUpdate {
+  export interface MessageUpdateEvent {
     content: string,
     channel_id: string,
     author: any

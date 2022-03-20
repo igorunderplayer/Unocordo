@@ -11,8 +11,9 @@ export default class WebSocketManager extends EventEmitter {
 
   connection?: WebSocket
   gateway: string
-
+  
   heartbeatInterval: NodeJS.Timer
+  sessionId: string
 
   constructor (client: Client) {
     super()

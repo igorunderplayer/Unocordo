@@ -5,7 +5,7 @@ import {
 
 interface ClientEvents {
   raw: [packet: GatewayEvents.Packet]
-  ready: [raw: GatewayEvents.Ready]
+  ready: [raw: GatewayEvents.ReadyEvent]
   messageCreate: [message: Message]
   messageUpdate: [message: Message]
 }

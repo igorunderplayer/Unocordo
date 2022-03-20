@@ -3,6 +3,7 @@ import { EventEmitter } from 'stream'
 import WebSocket from 'ws'
 import ClientEvents from '../gateway/clientEvents'
 import WebSocketManager from '../gateway/WebSocketManager'
+import { DiscordUser, Message } from '../structures'
 
 export interface ClientOptions {
   token: string
@@ -15,8 +16,10 @@ export interface ClientOptions {
 
 export default class Client extends EventEmitter {
   public readonly API_VERSION = '9'
+  public application: any
   public api: AxiosInstance
-  public user: any
+  public user: DiscordUser
+  public guilds: any[]
   public options: ClientOptions['options'] = {}
   intents: number
   _token: string
@@ -43,12 +46,16 @@ export default class Client extends EventEmitter {
     })
   }
 
+  async createMessage(channelId: string, options: any) {
+    const { data } = await this.api.post(`channels/${channelId}/messages`, options)
+
+    return new Message(data)
+  }
+
   emit<K extends keyof ClientEvents> (event: K, ...args: ClientEvents[K]): boolean
   emit (event: string | symbol, ...args: any[]) {
     return super.emit(event, ...args)
   }
-
-
 
   off<K extends keyof ClientEvents> (event: K, listener: (...args: ClientEvents[K]) => void): this
   off (event: string | symbol, listener: (...args: any) => any) {
