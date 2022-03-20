@@ -8,17 +8,16 @@ namespace GatewayEvents {
     t?: string
   }
 
-  export interface ReadyEvent {
+  export type ReadyEvent = {
     v: number
     user: any
     guilds: any[]
     shard?: number[]
     application: any
-    // eslint-disable-next-line camelcase
     session_id: string
   }
 
-  export interface GuildCreateEvent {
+  export type GuildCreateEvent = {
     id: string,
     name: string,
     explicit_content_filter: number,
@@ -60,13 +59,13 @@ namespace GatewayEvents {
     premium_tier: number
   }
 
-  export interface MessageCreateEvent {
+  export type MessageCreateEvent = {
     content: string,
     channel_id: string,
     author: any
   }
 
-  export interface MessageUpdateEvent {
+  export type MessageUpdateEvent = {
     content: string,
     channel_id: string,
     author: any

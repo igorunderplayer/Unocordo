@@ -1,9 +1,16 @@
 import axios, { AxiosInstance } from 'axios'
-import { EventEmitter } from 'stream'
+import { EventEmitter } from 'events'
 import WebSocket from 'ws'
 import ClientEvents from '../gateway/clientEvents'
 import WebSocketManager from '../gateway/WebSocketManager'
-import { DiscordUser, Message } from '../structures'
+import { 
+  DiscordUser,
+  DiscordGuild,
+  Message,
+  DiscordChannel
+} from '../structures'
+
+import { AnyChannel, ChannelData, MessageOptions } from '../typings'
 
 export interface ClientOptions {
   token: string
@@ -19,7 +26,7 @@ export default class Client extends EventEmitter {
   public application: any
   public api: AxiosInstance
   public user: DiscordUser
-  public guilds: any[]
+  public guilds: DiscordGuild[]
   public options: ClientOptions['options'] = {}
   intents: number
   _token: string
@@ -46,7 +53,13 @@ export default class Client extends EventEmitter {
     })
   }
 
-  async createMessage(channelId: string, options: any) {
+  async fetchChannel(channelId: string): Promise<AnyChannel> {
+    const { data } = await this.api.get<ChannelData>(`channels/${channelId}`)
+
+    return DiscordChannel.from(data, this)
+  }
+
+  async createMessage(channelId: string, options: MessageOptions) {
     const { data } = await this.api.post(`channels/${channelId}/messages`, options)
 
     return new Message(data)

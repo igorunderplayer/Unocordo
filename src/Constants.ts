@@ -17,6 +17,20 @@ export const Intents = {
   GUILD_SCHEDULED_EVENTS: 1 << 16
 }
 
+export const ChannelTypes = {
+  GUILD_TEXT: 0,
+  DM: 1,
+  GUILD_VOICE: 2,
+  GROUP_DM: 3,
+  GUILD_CATEGORY: 4,
+  GUILD_NEWS: 5,
+  GUILD_STORE: 6,
+  GUILD_NEW_THREAD: 10,
+  GUILD_PUBLIC_THREAD: 11,
+  GUILD_PRIVATE_THREAD: 12,
+  GUILD_STAGE_VOICE: 13
+}
+
 export const SocketCloseCodes = {
   UNKNOW_ERROR: 4000,
   UNKNOW_OPCODE: 4001,

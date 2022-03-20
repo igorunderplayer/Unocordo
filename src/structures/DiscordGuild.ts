@@ -1,6 +1,6 @@
 import GatewayEvents from '../gateway/gatewayEvents'
 
-export default class Guild {
+export default class DiscordGuild {
   id: string
   name: string
   constructor(d: GatewayEvents.GuildCreateEvent) {

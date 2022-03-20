@@ -11,7 +11,7 @@ export default class Message {
     this.channelId = data.channel_id
     this.content = data.content
 
-    if('author' in data) {
+    if ('author' in data) {
       this.user = new DiscordUser(data.author)
     }
   }
