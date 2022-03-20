@@ -10,15 +10,12 @@ import {
   DiscordChannel
 } from '../structures'
 
-import { AnyChannel, ChannelData, MessageOptions } from '../typings'
+import { AnyChannel, MessageOptions } from '../typings'
 
 export interface ClientOptions {
   token: string
   intents: number | number[]
   options?: { ws?: WebSocket.ClientOptions }
-
-  _tokenType?: 'Bot' | 'Bearer' | 'User'
-
 }
 
 export default class Client extends EventEmitter {
@@ -28,10 +25,11 @@ export default class Client extends EventEmitter {
   public user: DiscordUser
   public guilds: DiscordGuild[]
   public options: ClientOptions['options'] = {}
-  intents: number
-  _token: string
+  
+  readonly intents: number
 
-  _tokenType: ClientOptions['_tokenType'] = 'Bot'
+  _token: string
+  _tokenType = 'Bot'
 
   ws: WebSocketManager
 
@@ -54,7 +52,7 @@ export default class Client extends EventEmitter {
   }
 
   async fetchChannel(channelId: string): Promise<AnyChannel> {
-    const { data } = await this.api.get<ChannelData>(`channels/${channelId}`)
+    const { data } = await this.api.get(`channels/${channelId}`)
 
     return DiscordChannel.from(data, this)
   }

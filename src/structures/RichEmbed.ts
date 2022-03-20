@@ -1,8 +1,10 @@
+import { StructureData } from "../typings"
+
 export default class RichEmbed {
   title: string
   description: string
   fields: EmbedField[]
-  constructor(data: any = {}) {
+  constructor(data: StructureData = {}) {
     this.title = data.title
     this.description = data.description
     this.fields = []

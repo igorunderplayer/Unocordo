@@ -1,14 +1,17 @@
-import { ChannelData, MessageOptions } from '../../typings'
+import { MessageOptions, StructureData } from '../../typings'
 import Client from '../../client'
-import GuildChannel from './GuildChannel'
 
-export default class GuildTextChannel extends GuildChannel {
-  type: 0 | 2 | 4 | 5 | 6 | 10 | 11 | 12 | 13 = 0
+import { ChannelTypes } from '../../Constants'
+import DiscordChannel from './DiscordChannel'
+
+export default class GuildTextChannel extends DiscordChannel {
+  type = ChannelTypes.GUILD_TEXT
   topic: string
   position: number
-  constructor(data: ChannelData, client: Client) {
+  constructor(data: StructureData = {}, client: Client) {
     super(data, client)
 
+    this.type = 0
     this.topic = data.topic
     this.position = data.position
   }

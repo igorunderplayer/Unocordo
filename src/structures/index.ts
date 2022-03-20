@@ -1,6 +1,5 @@
 import DiscordGuild from './DiscordGuild'
 import DiscordChannel from './Channels/DiscordChannel'
-import GuildChannel from './Channels/GuildChannel'
 import DMChannel from './Channels/DMChannel'
 import GuildTextChannel from './Channels/GuildTextChannel'
 import GuildVoiceChannel from './Channels/GuildVoiceChannel'
@@ -13,7 +12,6 @@ export {
   DiscordGuild,
   DiscordChannel,
   DMChannel,
-  GuildChannel,
   GuildTextChannel,
   GuildVoiceChannel,
   GuildCategory,

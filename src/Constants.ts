@@ -17,18 +17,19 @@ export const Intents = {
   GUILD_SCHEDULED_EVENTS: 1 << 16
 }
 
-export const ChannelTypes = {
-  GUILD_TEXT: 0,
-  DM: 1,
-  GUILD_VOICE: 2,
-  GROUP_DM: 3,
-  GUILD_CATEGORY: 4,
-  GUILD_NEWS: 5,
-  GUILD_STORE: 6,
-  GUILD_NEW_THREAD: 10,
-  GUILD_PUBLIC_THREAD: 11,
-  GUILD_PRIVATE_THREAD: 12,
-  GUILD_STAGE_VOICE: 13
+export enum ChannelTypes {
+  BASE_CHANNEL = -1,
+  GUILD_TEXT = 0,
+  DM = 1,
+  GUILD_VOICE = 2,
+  GROUP_DM = 3,
+  GUILD_CATEGORY = 4,
+  GUILD_NEWS = 5,
+  GUILD_STORE = 6,
+  GUILD_NEW_THREAD = 10,
+  GUILD_PUBLIC_THREAD = 11,
+  GUILD_PRIVATE_THREAD = 12,
+  GUILD_STAGE_VOICE = 13
 }
 
 export const SocketCloseCodes = {
@@ -48,16 +49,16 @@ export const SocketCloseCodes = {
   DISALLOWED_INTENTS: 4014,
 }
 
-export const Opcodes = {
-  DISPATCH: 0,
-  HEARTBEAT: 1,
-  IDENTIFY: 2,
-  PRESENCE_UPDATE: 3,
-  VOICE_STATE_UPDATE: 4,
-  RESUME: 6,
-  RECONNECT: 7,
-  REQUEST_GUILD_MEMBERS: 8,
-  INVALID_SESSION: 9,
-  HELLO: 10,
-  HEARTBEAT_ACK: 11
+export enum Opcodes {
+  DISPATCH = 0,
+  HEARTBEAT = 1,
+  IDENTIFY = 2,
+  PRESENCE_UPDATE = 3,
+  VOICE_STATE_UPDATE = 4,
+  RESUME = 6,
+  RECONNECT = 7,
+  REQUEST_GUILD_MEMBERS = 8,
+  INVALID_SESSION = 9,
+  HELLO = 10,
+  HEARTBEAT_ACK = 11
 }

@@ -1,13 +1,4 @@
-export interface RawUser {
-  id: string
-  username: string
-  discriminator: string
-  bot: boolean
-  mfa_enabled: boolean
-  flags: number
-  email: string
-  avatar: string
-}
+import { StructureData } from "../typings"
 
 export default class DiscordUser {
   id: string
@@ -19,7 +10,7 @@ export default class DiscordUser {
   email: string
   avatar: string
 
-  constructor(data: RawUser) {
+  constructor(data: StructureData = {}) {
     this.id = data.id
     this.username = data.username
     this.discriminator = data.discriminator

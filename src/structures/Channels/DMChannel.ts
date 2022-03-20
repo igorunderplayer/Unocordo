@@ -1,10 +1,13 @@
 import Client from "../../client";
-import { ChannelData } from "../../typings";
+import { ChannelTypes } from "../../Constants";
+import { StructureData } from "../../typings";
 import DiscordChannel from "./DiscordChannel";
 
 export default class DMChannel extends DiscordChannel {
-  type: ChannelData['type'] = 1
-  constructor(data: ChannelData, client: Client) {
+  type = ChannelTypes.DM
+  constructor(data: StructureData = {}, client: Client) {
     super(data, client)
+
+    this.type = 1
   }
 }
