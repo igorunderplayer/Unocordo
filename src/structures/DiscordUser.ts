@@ -14,7 +14,7 @@ export default class DiscordUser {
     this.id = data.id
     this.username = data.username
     this.discriminator = data.discriminator
-    this.bot = data.bot
+    this.bot = data.bot ?? false
     this.mfaEnabled = data.mfa_enabled
     this.flags = data.flags
     this.email = data.email

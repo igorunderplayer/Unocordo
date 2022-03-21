@@ -5,8 +5,8 @@ import { ChannelTypes } from '../../Constants'
 import DiscordChannel from './DiscordChannel'
 import { DiscordGuild } from '..'
 
-export default class GuildTextChannel extends DiscordChannel {
-  type: ChannelTypes.GUILD_TEXT = ChannelTypes.GUILD_TEXT
+export default class GuildNewsChannel extends DiscordChannel {
+  type: ChannelTypes.GUILD_NEWS = ChannelTypes.GUILD_NEWS
   guildId: string
   guild: DiscordGuild
   topic: string

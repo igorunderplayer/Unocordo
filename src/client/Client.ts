@@ -10,7 +10,8 @@ import {
   DiscordChannel
 } from '../structures'
 
-import { AnyChannel, MessageOptions } from '../typings'
+import { AnyChannel, FetchMessagesOptions, MessageOptions } from '../typings'
+import Collection from '../util/Collection'
 
 export interface ClientOptions {
   token: string
@@ -23,7 +24,7 @@ export default class Client extends EventEmitter {
   public application: any
   public api: AxiosInstance
   public user: DiscordUser
-  public guilds: DiscordGuild[]
+  public guilds: Collection<string, DiscordGuild>
   public options: ClientOptions['options'] = {}
   
   readonly intents: number
@@ -42,7 +43,9 @@ export default class Client extends EventEmitter {
 
     this.intents = options.intents
 
+    this.guilds = new Collection()
     this.ws = new WebSocketManager(this)
+
     this.api = axios.create({
       baseURL: `https://discord.com/api/v${this.API_VERSION}`,
       headers: {
@@ -51,10 +54,30 @@ export default class Client extends EventEmitter {
     })
   }
 
+  public getChannel (channelId: string) {
+    for (const guild of this.guilds.values()) {
+      const channel = guild.channels.get(channelId)
+      if(!!channel) return channel
+    }
+  }
+
   async fetchChannel(channelId: string): Promise<AnyChannel> {
     const { data } = await this.api.get(`channels/${channelId}`)
 
     return DiscordChannel.from(this, data)
+  }
+
+  async fetchMessages(channelId: string, options: FetchMessagesOptions = {}) {
+    const { data } = await this.api.get(`channels/${channelId}/messages`, {
+      params: {
+        limit: options.limit,
+        after: options.after,
+        before: options.before,
+        around: options.around
+      }
+    })
+
+    return data.map(messageData => new Message(this, messageData))
   }
 
   async createMessage(channelId: string, options: MessageOptions | string) {
@@ -65,7 +88,7 @@ export default class Client extends EventEmitter {
     }
     const { data } = await this.api.post(`channels/${channelId}/messages`, options)
 
-    return new Message(data)
+    return new Message(this, data)
   }
 
   emit<K extends keyof ClientEvents> (event: K, ...args: ClientEvents[K]): boolean
