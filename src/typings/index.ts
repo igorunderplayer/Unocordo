@@ -5,6 +5,7 @@ import {
   DMChannel
 } from '../structures'
 
+export declare type TextableChannel = GuildTextChannel | DMChannel
 export declare type AnyChannel = GuildTextChannel | GuildVoiceChannel | GuildCategory| DMChannel
 
 export interface StructureData {

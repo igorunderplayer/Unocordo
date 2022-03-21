@@ -160,7 +160,7 @@ export const INVITE_DELETE = (client: Client) => {
 }
 
 export const MESSAGE_CREATE = (client: Client, data: GatewayEvents.MessageCreateEvent) => {
-  client.emit('messageCreate', new Message(data))
+  client.emit('messageCreate', new Message(client, data))
 }
 
 export const MESSAGE_UPDATE = (client: Client, data: any) => {

@@ -5,9 +5,9 @@ import DiscordChannel from "./DiscordChannel";
 
 
 export default class GuildVoiceChannel extends DiscordChannel {
-  type = ChannelTypes.GUILD_VOICE
-  constructor(data: StructureData = {}, client: Client) {
-    super(data, client)
+  type: ChannelTypes.GUILD_VOICE
+  constructor(client: Client, data: StructureData = {}) {
+    super(client, data)
 
     this.type = 2
   }

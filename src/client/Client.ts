@@ -54,10 +54,15 @@ export default class Client extends EventEmitter {
   async fetchChannel(channelId: string): Promise<AnyChannel> {
     const { data } = await this.api.get(`channels/${channelId}`)
 
-    return DiscordChannel.from(data, this)
+    return DiscordChannel.from(this, data)
   }
 
-  async createMessage(channelId: string, options: MessageOptions) {
+  async createMessage(channelId: string, options: MessageOptions | string) {
+    if(typeof options === 'string') {
+      options = {
+        content: options
+      }
+    }
     const { data } = await this.api.post(`channels/${channelId}/messages`, options)
 
     return new Message(data)

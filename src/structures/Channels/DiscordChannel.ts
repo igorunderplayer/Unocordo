@@ -9,16 +9,16 @@ export default class DiscordChannel {
   client: Client
   type: ChannelTypes = ChannelTypes.BASE_CHANNEL
   id: string
-  constructor(data: StructureData = {}, client: Client) {
+  constructor(client: Client, data: StructureData = {}) {
     this.id = data.id
     this.type = -1
     this.client = client
   }
 
-  static from (data: StructureData = {}, client: Client) {
+  static from (client: Client, data: StructureData = {}) {
     switch (data.type) {
       case ChannelTypes.GUILD_TEXT:
-        return new GuildTextChannel(data, client)
+        return new GuildTextChannel(client, data)
     }
   }
 }
