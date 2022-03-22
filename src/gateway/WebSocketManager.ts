@@ -23,10 +23,12 @@ export default class WebSocketManager extends EventEmitter {
   }
 
   connect () {
-    this.connection = new WebSocket(this.gateway, this._client.options.ws)
+    if (!this.connection) {
+      this.connection = new WebSocket(this.gateway, this._client.options.ws)
 
-    this.connection.on('message', this.onWSMessage)
-    this.connection.on('close', this.onWSClose)
+      this.connection.on('message', this.onWSMessage)
+      this.connection.on('close', this.onWSClose)
+    }
   }
 
   sendWS (op: GatewayEvents.Opcodes, data: any) {
