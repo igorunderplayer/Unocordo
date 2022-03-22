@@ -6,9 +6,10 @@ import {
   GuildNewsChannel
 } from '../structures'
 
+export declare type PrivateChannels = DMChannel
 export declare type GuildChannels = GuildTextChannel | GuildCategory | GuildNewsChannel | GuildVoiceChannel
 export declare type TextableChannel = GuildTextChannel | DMChannel
-export declare type AnyChannel = GuildChannels | TextableChannel
+export declare type AnyChannel = GuildChannels | PrivateChannels
 
 export interface StructureData {
   [key: string]: any

@@ -10,10 +10,10 @@ export default class Message {
   content: string
 
   constructor (client: Client, data: StructureData = {}) {
-    this.channel = client.getChannel(this.channelId) as TextableChannel
-    this.user = new DiscordUser(data.author)
     this.id = data.id
     this.channelId = data.channel_id
+    this.channel = client.getChannel(this.channelId) as TextableChannel
+    this.user = new DiscordUser(data.author)
     this.content = data.content
   }
 }

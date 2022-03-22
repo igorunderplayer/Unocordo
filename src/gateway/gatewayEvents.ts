@@ -1,3 +1,5 @@
+import { PrivateChannels, StructureData } from "../typings"
+
 namespace GatewayEvents {
   export type Opcodes = 0 | 1 | 2 | 3 | 4 | 6 | 7 | 8 | 9 | 10 | 11
 
@@ -10,11 +12,12 @@ namespace GatewayEvents {
 
   export type ReadyEvent = {
     v: number
-    user: any
+    user: StructureData
     guilds: any[]
     shard?: number[]
-    application: any
+    application: StructureData
     session_id: string
+    private_channels: StructureData[]
   }
 
   export type GuildCreateEvent = {

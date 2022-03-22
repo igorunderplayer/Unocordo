@@ -20,6 +20,7 @@ export default class DiscordGuild {
       const channel = DiscordChannel.from(client, _channel) as GuildChannels
       channel.guild = this
       this.channels.add(channel)
+      client.channels.guildChannels.add(channel)
     }
   }
 }

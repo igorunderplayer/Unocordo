@@ -1,12 +1,18 @@
 import Client from '../client'
-import { DiscordGuild, DiscordUser, Message } from '../structures'
-import { StructureData } from '../typings'
+import { DiscordChannel, DiscordGuild, DiscordUser, Message } from '../structures'
+import { GuildChannels, PrivateChannels, StructureData } from '../typings'
 import GatewayEvents from './gatewayEvents'
 
 export function READY (client: Client, data: GatewayEvents.ReadyEvent) {
   client.application = data.application
   client.ws.sessionId = data.session_id
   client.user = new DiscordUser(data.user)
+
+  for(const _channel of data.private_channels) {
+    const channel = DiscordChannel.from(client, _channel) as PrivateChannels
+    client.channels.privateChannels.add(channel)
+  }
+
   client.emit('ready', data)
 }
 
@@ -18,16 +24,40 @@ export function INVALID_SESSION (client: Client) {
   
 }
 
-export function CHANNEL_CREATE (client: Client) {
-  
+export function CHANNEL_CREATE (client: Client, data: StructureData) {
+  const _channel = DiscordChannel.from(client, data)
+  const channel = _channel as GuildChannels
+  channel.guild = client.guilds.get(channel.guildId)
+  channel.guild.channels.add(channel)
+  client.channels.guildChannels.add(channel)
+
+  client.emit('channelCreate', channel)
 }
 
-export function CHANNEL_UPDATE (client: Client) {
-  
+export function CHANNEL_UPDATE (client: Client, data: StructureData) {
+  const channel = DiscordChannel.from(client, data)  
+  let oldChannel: DiscordChannel
+  if (!channel.isGuildChannel()) {
+    oldChannel = client.channels.privateChannels.get(channel.id)
+  } else {
+    oldChannel = client.channels.guildChannels.get(channel.id)
+  }
+
+  client.emit('channelUpdate', oldChannel, channel)
 }
 
-export function CHANNEL_DELETE (client: Client) {
-  
+export function CHANNEL_DELETE (client: Client, data: StructureData) {
+  const channel = DiscordChannel.from(client, data)
+
+  if (client.channels.guildChannels.has(channel.id)) {
+    client.channels.guildChannels.delete(channel.id)
+  }
+
+  if (client.channels.privateChannels.has(channel.id)) {
+    client.channels.privateChannels.delete(channel.id)
+  }
+
+  client.emit('channelDelete', channel)
 }
 
 export function CHANNEL_PINS_UPDATE (client: Client) {
@@ -65,8 +95,11 @@ export function GUILD_CREATE (client: Client, data: GatewayEvents.GuildCreateEve
 }
 
 export function GUILD_DELETE (client: Client, data: StructureData) {
-  const guild = new DiscordGuild(client, data)
+  const guild = client.guilds.get(data.id)
   client.guilds.delete(guild.id)
+  for (const channel of data.channels) {
+    client.channels.guildChannels.delete(channel.id)
+  }
   client.emit('guildDelete', guild)
 }
 

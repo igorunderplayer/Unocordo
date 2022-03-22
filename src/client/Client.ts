@@ -3,6 +3,7 @@ import { EventEmitter } from 'events'
 import WebSocket from 'ws'
 import ClientEvents from '../gateway/clientEvents'
 import WebSocketManager from '../gateway/WebSocketManager'
+import ClientChannelsManager from '../managers/ClientChannelsManager'
 import { 
   DiscordUser,
   DiscordGuild,
@@ -25,6 +26,7 @@ export default class Client extends EventEmitter {
   public api: AxiosInstance
   public user: DiscordUser
   public guilds: Collection<string, DiscordGuild>
+  public channels: ClientChannelsManager
   public options: ClientOptions['options'] = {}
   
   readonly intents: number
@@ -44,6 +46,7 @@ export default class Client extends EventEmitter {
     this.intents = options.intents
 
     this.guilds = new Collection()
+    this.channels = new ClientChannelsManager(this)
     this.ws = new WebSocketManager(this)
 
     this.api = axios.create({
@@ -55,9 +58,12 @@ export default class Client extends EventEmitter {
   }
 
   public getChannel (channelId: string) {
-    for (const guild of this.guilds.values()) {
-      const channel = guild.channels.get(channelId)
-      if(!!channel) return channel
+    if (this.channels.guildChannels.has(channelId)) {
+      return this.channels.guildChannels.get(channelId)
+    }
+
+    if (this.channels.privateChannels.has(channelId)) {
+      return this.channels.privateChannels.get(channelId)
     }
   }
 
