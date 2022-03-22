@@ -1,3 +1,34 @@
+export enum ChannelTypes {
+  BASE_CHANNEL = -1,
+  GUILD_TEXT = 0,
+  DM = 1,
+  GUILD_VOICE = 2,
+  GROUP_DM = 3,
+  GUILD_CATEGORY = 4,
+  GUILD_NEWS = 5,
+  GUILD_STORE = 6,
+  GUILD_NEW_THREAD = 10,
+  GUILD_PUBLIC_THREAD = 11,
+  GUILD_PRIVATE_THREAD = 12,
+  GUILD_STAGE_VOICE = 13
+}
+
+export enum InteractionTypes {
+  BASE_INTERACTION = -1,
+  PING = 1,
+  APPLICATION_COMMAND = 2,
+  MESSAGE_COMPONENT = 3,
+  APPLICATION_COMMAND_AUTOCOMPLETE = 4,
+  MODAL_SUBMIT = 5
+}
+
+export enum ComponentTypes {
+  ACTION_ROW = 1,
+  BUTTON = 2,
+  SELECT_MENU = 3,
+  TEXT_INPUT = 4
+}
+
 export const Intents = {
   GUILDS: 1 << 0,
   GUILD_MEMBERS: 1 << 1,
@@ -15,21 +46,6 @@ export const Intents = {
   DIRECT_MESSAGE_REACTIONS: 1 << 13,
   DIRECT_MESSAGE_TYPING: 1 << 14,
   GUILD_SCHEDULED_EVENTS: 1 << 16
-}
-
-export enum ChannelTypes {
-  BASE_CHANNEL = -1,
-  GUILD_TEXT = 0,
-  DM = 1,
-  GUILD_VOICE = 2,
-  GROUP_DM = 3,
-  GUILD_CATEGORY = 4,
-  GUILD_NEWS = 5,
-  GUILD_STORE = 6,
-  GUILD_NEW_THREAD = 10,
-  GUILD_PUBLIC_THREAD = 11,
-  GUILD_PRIVATE_THREAD = 12,
-  GUILD_STAGE_VOICE = 13
 }
 
 export const SocketCloseCodes = {

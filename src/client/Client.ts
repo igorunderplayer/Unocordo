@@ -98,23 +98,27 @@ export default class Client extends EventEmitter {
   }
 
   emit<K extends keyof ClientEvents> (event: K, ...args: ClientEvents[K]): boolean
+  emit (event: string | symbol, ...args: any[]): boolean
   emit (event: string | symbol, ...args: any[]) {
     return super.emit(event, ...args)
   }
 
   off<K extends keyof ClientEvents> (event: K, listener: (...args: ClientEvents[K]) => void): this
+  off (event: string | symbol, ...args: any[]): this
   off (event: string | symbol, listener: (...args: any) => any) {
     super.off(event, listener)
     return this
   }
 
   on<K extends keyof ClientEvents> (event: K, listener: (...args: ClientEvents[K]) => void): this
+  on (event: string | symbol, ...args: any[]): this
   on (event: string | symbol, listener: (...args: any) => any) {
     super.on(event, listener)
     return this
   }
 
   once<K extends keyof ClientEvents> (event: K, listener: (...args: ClientEvents[K]) => void): this
+  once (event: string | symbol, ...args: any[]): this
   once (event: string | symbol, listener: (...args: any) => any) {
     super.once(event, listener)
     return this

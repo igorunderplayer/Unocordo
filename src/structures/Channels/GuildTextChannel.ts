@@ -19,7 +19,7 @@ export default class GuildTextChannel extends DiscordChannel {
     this.position = data.position
   }
 
-  createMessage(options: MessageOptions | string) {
+  sendMessage(options: MessageOptions | string) {
     return this.client.createMessage(this.id, options)
   }
 }

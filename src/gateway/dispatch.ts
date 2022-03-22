@@ -183,8 +183,8 @@ export function INTEGRATION_DELETE (client: Client) {
   
 }
 
-export function INTERACTION_CREATE (client: Client) {
-  
+export function INTERACTION_CREATE (client: Client, data: StructureData) {
+  client.emit('interactionCreate', data)
 }
 
 export function INVITE_CREATE (client: Client) {

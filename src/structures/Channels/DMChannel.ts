@@ -10,7 +10,7 @@ export default class DMChannel extends DiscordChannel {
     super(client, data)
   }
 
-  createMessage(options: MessageOptions | string) {
+  sendMessage(options: MessageOptions | string) {
     return this.client.createMessage(this.id, options)
   }
 
