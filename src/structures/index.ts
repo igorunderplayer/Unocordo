@@ -10,11 +10,13 @@ import Interaction from './Interactions/Interaction'
 import Message from './Message'
 import ApplicationCommandInteraction from './Interactions/ApplicationCommandInteraction'
 import ComponentInteraction from './Interactions/ComponentInteraction'
+import DiscordRole from './DiscordRole'
 
 export {
-  DiscordUser,
-  DiscordGuild,
   DiscordChannel,
+  DiscordGuild,
+  DiscordUser,
+  DiscordRole,
   DMChannel,
   GuildTextChannel,
   GuildNewsChannel,

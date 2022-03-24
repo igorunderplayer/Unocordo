@@ -39,8 +39,10 @@ export function CHANNEL_UPDATE (client: Client, data: StructureData) {
   let oldChannel: DiscordChannel
   if (!channel.isGuildChannel()) {
     oldChannel = client.channels.privateChannels.get(channel.id)
+    client.channels.privateChannels.set(channel.id, channel as PrivateChannels)
   } else {
     oldChannel = client.channels.guildChannels.get(channel.id)
+    client.channels.guildChannels.set(channel.id, channel as GuildChannels)
   }
 
   client.emit('channelUpdate', oldChannel, channel)

@@ -1,14 +1,18 @@
 import Client from '../client'
-import GatewayEvents from '../gateway/gatewayEvents'
 import { GuildChannels, StructureData } from '../typings'
 import Collection from '../util/Collection'
-import DiscordChannel from './Channels/DiscordChannel'
+
+import {
+  DiscordChannel,
+  DiscordRole
+} from '.'
 
 export default class DiscordGuild {
   client: Client
   id: string
   name: string
   channels: Collection<string, GuildChannels>
+  roles: Collection<string, DiscordRole>
   constructor(client: Client, data: StructureData = {}) {
     this.client = client
     this.id = data.id
@@ -21,6 +25,14 @@ export default class DiscordGuild {
       channel.guild = this
       this.channels.add(channel)
       client.channels.guildChannels.add(channel)
+    }
+
+    this.roles = new Collection()
+    for (const _role of data.roles) {
+      _role.guild_id = this.id
+      const role = new DiscordRole(client, _role)
+      role.guild = this
+      this.roles.add(role)
     }
   }
 }
