@@ -9,8 +9,8 @@ export default class RichEmbed {
     this.description = data.description
     this.fields = []
 
-    if('fields' in data) {
-      this.fields = data.fields.map(f => new EmbedField(f))
+    for (const field of data.fields) {
+      this.fields.push(new EmbedField(field))
     }
   }
 
@@ -26,13 +26,14 @@ export default class RichEmbed {
 
   addField(field: EmbedField) {
     this.fields.push(field)
+    return this
   }
 }
 
 export class EmbedField {
   name: string
   value: string
-  inline: boolean
+  inline?: boolean
 
   constructor(data: EmbedField) {
     this.name = data.name

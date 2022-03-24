@@ -9,12 +9,13 @@ export default class GuildTextChannel extends DiscordChannel {
   type: ChannelTypes.GUILD_TEXT = ChannelTypes.GUILD_TEXT
   guildId: string
   guild: DiscordGuild
-  topic: string
+  topic?: string | null
   position: number
   constructor(client: Client, data: StructureData = {}) {
     super(client, data)
 
     this.guildId = data.guild_id
+    this.guild = client.guilds.get(this.guildId)
     this.topic = data.topic
     this.position = data.position
   }

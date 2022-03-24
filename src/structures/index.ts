@@ -12,6 +12,7 @@ import ApplicationCommandInteraction from './Interactions/ApplicationCommandInte
 import ComponentInteraction from './Interactions/ComponentInteraction'
 import DiscordRole from './DiscordRole'
 import DiscordMember from './DiscordMember'
+import RichEmbed from './RichEmbed'
 
 export {
   DiscordChannel,
@@ -27,5 +28,6 @@ export {
   Interaction,
   ApplicationCommandInteraction,
   ComponentInteraction,
-  Message
+  Message,
+  RichEmbed
 }

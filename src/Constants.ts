@@ -22,6 +22,16 @@ export enum InteractionTypes {
   MODAL_SUBMIT = 5
 }
 
+export enum InteractionCallbackTypes {
+  PONG = 1,
+  CHANNEL_MESSAGE_WITH_SOURCE = 4,
+  DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5,
+  DEFERRED_UPDATE_MESSAGE = 6,
+  UPDATE_MESSAGE = 7,
+  APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8,
+  MODAL = 9
+}
+
 export enum ComponentTypes {
   ACTION_ROW = 1,
   BUTTON = 2,

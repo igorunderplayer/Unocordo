@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import { EventEmitter } from 'events'
 import WebSocket from 'ws'
+import { InteractionCallbackTypes } from '../Constants'
 import ClientEvents from '../gateway/clientEvents'
 import WebSocketManager from '../gateway/WebSocketManager'
 import ClientChannelsManager from '../managers/ClientChannelsManager'
@@ -8,10 +9,11 @@ import {
   DiscordUser,
   DiscordGuild,
   Message,
-  DiscordChannel
+  DiscordChannel,
+  Interaction
 } from '../structures'
 
-import { AnyChannel, FetchMessagesOptions, MessageOptions } from '../typings'
+import { AnyChannel, FetchMessagesOptions, InteractionCallbackData, MessageOptions } from '../typings'
 import Collection from '../util/Collection'
 
 export interface ClientOptions {
@@ -54,6 +56,13 @@ export default class Client extends EventEmitter {
       headers: {
         Authorization: `${this._tokenType} ${this._token}`
       }
+    })
+  }
+
+  callbackInteraction (type: InteractionCallbackTypes, interaction: Interaction, data: InteractionCallbackData) {
+    this.api.post(`interactions/${interaction.id}/${interaction.token}/callback`, {
+      type,
+      data
     })
   }
 

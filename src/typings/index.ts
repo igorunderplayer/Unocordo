@@ -1,15 +1,43 @@
 import {
+  ApplicationCommandInteraction,
+  ComponentInteraction,
+  DMChannel,
   GuildTextChannel,
   GuildVoiceChannel,
   GuildCategory,
-  DMChannel,
-  GuildNewsChannel
+  GuildNewsChannel,
+  RichEmbed
 } from '../structures'
 
 export declare type PrivateChannels = DMChannel
-export declare type GuildChannels = GuildTextChannel | GuildCategory | GuildNewsChannel | GuildVoiceChannel
-export declare type TextableChannel = GuildTextChannel | DMChannel
+export declare type GuildTextableChannels = GuildTextChannel | GuildNewsChannel
+export declare type GuildChannels = GuildTextableChannels | GuildCategory | GuildVoiceChannel
+export declare type TextableChannel = GuildTextableChannels | DMChannel
 export declare type AnyChannel = GuildChannels | PrivateChannels
+
+export declare type AnyInteraction = ComponentInteraction | ApplicationCommandInteraction
+
+export declare type InteractionCallbackData = MessageInteractionCallbackData | AutoCompleteInteractionCallbackData | ModalInteractionCallbackData
+
+export interface MessageInteractionCallbackData {
+  tts?: boolean
+  content?: string
+  embeds?: RichEmbed[]
+  allowedMentions?: any
+  flags?: number
+  components?: any[]
+  attachments?: any[]
+}
+
+export interface AutoCompleteInteractionCallbackData {
+  choices: any[]
+}
+
+export interface ModalInteractionCallbackData {
+  customId: string
+  title: string
+  componetns: any[]
+}
 
 export interface StructureData {
   [key: string]: any
@@ -23,7 +51,10 @@ export interface FetchMessagesOptions {
 }
 
 export interface MessageOptions {
-  content: string
+  content?: string,
+  embeds?: RichEmbed[],
+  components?: any[],
+
 }
 
 const arr = ['a', 'o', 'e']

@@ -9,12 +9,13 @@ export default class GuildNewsChannel extends DiscordChannel {
   type: ChannelTypes.GUILD_NEWS = ChannelTypes.GUILD_NEWS
   guildId: string
   guild: DiscordGuild
-  topic: string
+  topic?: string
   position: number
   constructor(client: Client, data: StructureData = {}) {
     super(client, data)
 
     this.guildId = data.guild_id
+    this.guild = client.guilds.get(this.guildId)
     this.topic = data.topic
     this.position = data.position
   }

@@ -1,7 +1,14 @@
 import Client from '../client'
-import { DiscordChannel, DiscordGuild, DiscordUser, Message } from '../structures'
 import { GuildChannels, PrivateChannels, StructureData } from '../typings'
 import GatewayEvents from './gatewayEvents'
+
+import {
+  DiscordChannel,
+  DiscordGuild,
+  DiscordUser,
+  Interaction,
+  Message
+} from '../structures'
 
 export function READY (client: Client, data: GatewayEvents.ReadyEvent) {
   client.application = data.application
@@ -186,7 +193,8 @@ export function INTEGRATION_DELETE (client: Client) {
 }
 
 export function INTERACTION_CREATE (client: Client, data: StructureData) {
-  client.emit('interactionCreate', data)
+  const interaction = Interaction.from(client, data)
+  client.emit('interactionCreate', interaction)
 }
 
 export function INVITE_CREATE (client: Client) {

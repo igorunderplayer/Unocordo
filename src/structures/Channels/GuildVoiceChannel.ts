@@ -14,5 +14,7 @@ export default class GuildVoiceChannel extends DiscordChannel {
     super(client, data)
 
     this.guildId = data.guild_id
+    this.guild = client.guilds.get(this.guildId)
+
   }
 }

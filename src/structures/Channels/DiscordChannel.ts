@@ -38,14 +38,9 @@ export default class DiscordChannel {
   }
 
   isGuildChannel () {
-    return this.type == ChannelTypes.GUILD_TEXT ||
-          this.type == ChannelTypes.GUILD_VOICE ||
-          this.type == ChannelTypes.GUILD_CATEGORY ||
-          this.type == ChannelTypes.GUILD_NEWS ||
-          this.type == ChannelTypes.GUILD_STORE ||
-          this.type == ChannelTypes.GUILD_NEW_THREAD ||
-          this.type == ChannelTypes.GUILD_PUBLIC_THREAD ||
-          this.type == ChannelTypes.GUILD_PRIVATE_THREAD ||
-          this.type == ChannelTypes.GUILD_STAGE_VOICE
+    return this.type === ChannelTypes.GUILD_TEXT ||
+      this.type === ChannelTypes.GUILD_VOICE ||
+      this.type === ChannelTypes.GUILD_CATEGORY ||
+      this.type === ChannelTypes.GUILD_NEWS
   }
 }
