@@ -4,6 +4,7 @@ import Collection from '../util/Collection'
 
 import {
   DiscordChannel,
+  DiscordMember,
   DiscordRole
 } from '.'
 
@@ -12,6 +13,7 @@ export default class DiscordGuild {
   id: string
   name: string
   channels: Collection<string, GuildChannels>
+  members: Collection<string, DiscordMember>
   roles: Collection<string, DiscordRole>
   constructor(client: Client, data: StructureData = {}) {
     this.client = client
@@ -25,6 +27,12 @@ export default class DiscordGuild {
       channel.guild = this
       this.channels.add(channel)
       client.channels.guildChannels.add(channel)
+    }
+
+    this.members = new Collection()
+    for (const _member of data.members) {
+      const member = new DiscordMember(client, _member)
+      this.members.add(member)
     }
 
     this.roles = new Collection()

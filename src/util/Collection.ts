@@ -1,7 +1,13 @@
+export interface CollectionOptions {
+  limit?: number
+}
+
 export default class Collection<K, V> extends Map<K, V> {
   limit: number
-  constructor() {
-    super()
+  constructor(options: CollectionOptions = {}, iterable?: Iterable<[K, V]>) {
+    super(iterable)
+
+    this.limit = options.limit || Infinity
   }
 
   add (obj: V & { id: K }) {
@@ -9,7 +15,17 @@ export default class Collection<K, V> extends Map<K, V> {
       throw new TypeError('Object must have an id')
     }
 
+    if(this.limit === this.size) {
+      this.delete(this.keys().next().value)
+    }
+
     this.set(obj.id, obj)
+    return this
+  }
+
+  at (index: number) {
+    const values = Array.from(this.values())
+    return values[index]
   }
 
   find (fn: (value: V) => V) {
@@ -18,9 +34,8 @@ export default class Collection<K, V> extends Map<K, V> {
     }
   }
 
-  filter (fn: (value: V) => boolean) {
+  filter (fn: (value: V) => boolean): V[] {
     const filtered = []
-
     for (const val of this.values()) {
       if(fn(val)) filtered.push(val)
     }
@@ -38,5 +53,10 @@ export default class Collection<K, V> extends Map<K, V> {
     }
 
     return values
+  }
+
+  reverse () {
+    const values = Array.from(this.values())
+    return values.reverse()
   }
 }
