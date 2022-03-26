@@ -8,7 +8,6 @@ export default class DiscordButton extends DiscordComponent {
   label: string
   emoji: any
   url: string
-  action: string
   constructor(client: Client, data: StructureData = {}) {
     super(client, data)
     this.label = data.label
